@@ -1,5 +1,7 @@
 --to do list
 
+5/12
+
 1) concepts 
 	add ConceptProduct table
 	add Concepts into Cat table
