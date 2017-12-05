@@ -1,0 +1,45 @@
+﻿@model IEnumerable<BusinessLayerLibrary.Dept>
+
+@{
+    ViewBag.Title = "Department Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Department Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DeptID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeptName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeptOrder)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeptID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeptName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeptOrder)
+        </td>
+        <td>
+            @Html.ActionLink("Space Allocation", "Index", "SpaceAllocation", new { DeptID = item.DeptID }, null)
+        </td>
+        <td>
+            @Html.ActionLink("Available Space", "Index", "AvailableSpace", new { DeptID = item.DeptID }, null)
+        </td>
+    </tr>
+}
+
+</table>

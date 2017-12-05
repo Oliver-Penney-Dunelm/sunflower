@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BusinessLayerLibrary.Attribute>
+
+@{
+    ViewBag.Title = "Attribute Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Attribute Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seasonal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeOrder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SapName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlmName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FutureSeasonCascade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Calculated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Seasonal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeOrder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SapName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlmName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataTypeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FutureSeasonCascade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Calculated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AttributeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AttributeID })
+        </td>
+    </tr>
+}
+
+</table>

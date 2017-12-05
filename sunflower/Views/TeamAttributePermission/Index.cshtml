@@ -1,0 +1,75 @@
+﻿@model IEnumerable<BusinessLayerLibrary.TeamAttributePermission>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TeamID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReadPermission)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WritePermission)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notify)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ViewChange)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParkForQuarantine)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TeamID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReadPermission)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WritePermission)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notify)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ViewChange)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParkForQuarantine)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

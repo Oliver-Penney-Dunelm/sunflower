@@ -1,0 +1,45 @@
+﻿@model IEnumerable<BusinessLayerLibrary.Space>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SpaceID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpaceDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpaceOrder)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpaceID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpaceDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpaceOrder)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SpaceID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SpaceID })
+        </td>
+    </tr>
+}
+
+</table>

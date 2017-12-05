@@ -1,0 +1,181 @@
+﻿@model IEnumerable<BusinessLayerLibrary.AttributeValuePivot>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Attribute Value Pivot Index</h3>
+
+<p>
+    @Html.ActionLink("Create New PreArticle", "Create", "PreArticleSeasonal", new { SeasonID = ViewBag.SeasonID },null)
+</p>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-md-2">
+        @Html.DropDownList("ddSeason", ViewData["ddSeason"] as SelectList, new { @class = "form-control" })
+    </div>
+    <div class="col-md-2">
+        @Html.DropDownList("ddView", ViewData["ddView"] as SelectList, new { @class = "form-control" })
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Change" class="btn btn-default" />
+    </div>
+
+    <div>
+        <h4>
+            @ViewBag.FilterMessage
+        </h4>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th colspan="8">Standard Attributes</th>
+            <th colspan="18">Dynamic Attributes</th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SapArticleID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MasterDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeptName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MerchCatDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VendorDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProposedPreArticleGradeDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConfirmedPreArticleGradeDesc)
+            </th>
+            @for (int i = 1; i <= 18; i++)
+            {
+                <th>
+                    @ViewData["att" + i.ToString("00")]
+                </th>
+            }
+            <th>filter</th>
+        </tr>
+        <tr>
+            <td>@Html.Editor("SapArticleID_f", (string)ViewData["SapArticleID_f"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            <td>@Html.Editor("MasterDescription_f", (string)ViewData["MasterDescription_f"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            <td>@Html.Editor("DeptName_f", (string)ViewData["DeptName_f"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            <td>@Html.Editor("CatDesc_f", (string)ViewData["CatDesc_f"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            <td>@Html.Editor("MerchCatDesc_f", (string)ViewData["MerchCatDesc_f"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            <td>@Html.Editor("VendorDesc_f", (string)ViewData["VendorDesc_f"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            <td>@Html.Editor("ProposedPreArticleGradeDesc_f", (string)ViewData["ProposedPreArticleGradeDesc_f"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            <td>@Html.Editor("ConfirmedPreArticleGradeDesc_f", (string)ViewData["ConfirmedPreArticleGradeDesc_f"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            @for (int i = 1; i <= 18; i++)
+            {
+                <td>@Html.Editor("Att" + i.ToString("00") + "Fragment", (string)ViewData["Att" + i.ToString("00") + "Fragment"], new { htmlAttributes = new { @class = "form -control  input-sm" } })</td>
+            }
+            <td><input type="submit" value="Filter" class="btn btn-sm" /></td>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SapArticleID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MasterDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeptName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CatDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MerchCatDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProposedPreArticleGradeDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConfirmedPreArticleGradeDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att01)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att02)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att03)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att04)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att05)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att06)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att07)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att08)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att09)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att10)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att11)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att12)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att13)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att14)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att15)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att16)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att17)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Att18)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "PreArticleSeasonal", new { id = item.ID }, null) |
+                    @Html.ActionLink("Attributes", "Index", "AttributeValue", new { SeasonID = item.SeasonID, SfID = item.SFID }, null)
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+
+

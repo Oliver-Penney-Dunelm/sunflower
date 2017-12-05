@@ -1,0 +1,57 @@
+﻿@model BusinessLayerLibrary.Cat
+
+@{
+    ViewBag.Title = "Delete Cat";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Delete Cat</h2>
+
+<h3>Are you sure you want to delete category @ViewBag.ID?</h3>
+<div>
+    <h4>Cat</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CatDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CatActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CatOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Concept)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Concept)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

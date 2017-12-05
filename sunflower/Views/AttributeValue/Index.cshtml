@@ -1,0 +1,69 @@
+﻿@model IEnumerable<BusinessLayerLibrary.AttributeValue>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Attribute Value Index for SFID = @ViewBag.Sfid for Season = @ViewBag.SeasonID</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { sfid = ViewBag.Sfid , SeasonID = ViewBag.SeasonID })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SFID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeasonID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeOrder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttributeValueEntry)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SFID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeasonID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeOrder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttributeValueEntry)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    <p>
+        @Html.ActionLink("Back to pivot", "Index", "AttributeValuePivot", new { SeasonID = ViewBag.SeasonID }, null)
+    </p>
+</div>

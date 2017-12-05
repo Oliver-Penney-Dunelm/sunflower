@@ -1,0 +1,82 @@
+﻿@model BusinessLayerLibrary.AvailableSpace
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<h3>You can only delete the last fixture ordinal</h3>
+<div>
+    <h4>Available Space</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SeasonID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeasonID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpaceID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpaceID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CatID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpaceGradeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpaceGradeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpaceGradeDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpaceGradeDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayFor(model => model.FixtureOrdinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FixtureOrdinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FixtureName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FixtureName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

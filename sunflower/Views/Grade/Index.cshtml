@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BusinessLayerLibrary.Grade>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Grade Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GradeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GradeDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GradeOrder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreArticleGrade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WholeGrade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubCatGrade)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GradeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GradeDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GradeOrder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PreArticleGrade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WholeGrade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubCatGrade)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.GradeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.GradeID })
+        </td>
+    </tr>
+}
+
+</table>

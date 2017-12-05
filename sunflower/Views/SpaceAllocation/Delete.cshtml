@@ -1,0 +1,106 @@
+﻿@model BusinessLayerLibrary.SpaceAllocation
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<h4>If you delete the location ID from the middle of a sequence, the location IDs will be reset</h4>
+<div>
+    <h4>Space Allocation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SeasonID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeasonID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpaceID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpaceID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CatID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpaceGradeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpaceGradeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FixtureOrdinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FixtureOrdinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FixtureName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FixtureName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrdinalSequence)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrdinalSequence)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SFID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SFID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fill)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fill)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MeTypeDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MeTypeDesc)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,73 @@
+﻿@model BusinessLayerLibrary.Season
+
+@{
+    ViewBag.Title = "Delete Season";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete season @ViewBag.ID</h3>
+<div>
+    <h4>Season</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SeasonDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeasonDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstLaunchDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstLaunchDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeasonActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeasonActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VAT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VAT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GBPUSD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GBPUSD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GBPEUR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GBPEUR)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

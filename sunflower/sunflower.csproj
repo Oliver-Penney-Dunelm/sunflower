@@ -141,7 +141,25 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AttributeController.cs" />
+    <Compile Include="Controllers\AttributeValueController.cs" />
+    <Compile Include="Controllers\AttributeValuePivotController.cs" />
+    <Compile Include="Controllers\AvailableSpaceController.cs" />
+    <Compile Include="Controllers\CatController.cs" />
+    <Compile Include="Controllers\DeptController.cs" />
+    <Compile Include="Controllers\GradeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MerchCatController.cs" />
+    <Compile Include="Controllers\MeTypeController.cs" />
+    <Compile Include="Controllers\PivotViewController.cs" />
+    <Compile Include="Controllers\PreArticleSeasonalController.cs" />
+    <Compile Include="Controllers\SeasonController.cs" />
+    <Compile Include="Controllers\SpaceAllocationController.cs" />
+    <Compile Include="Controllers\SpaceController.cs" />
+    <Compile Include="Controllers\TeamAttributePermissionController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -159,6 +177,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -184,6 +203,78 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Season\Index.cshtml" />
+    <Content Include="Views\Team\Index.cshtml" />
+    <Content Include="Views\AttributeValuePivot\Index.cshtml" />
+    <Content Include="Views\AttributeValue\Index.cshtml" />
+    <Content Include="Views\AttributeValue\Create.cshtml" />
+    <Content Include="Views\PreArticleSeasonal\Index.cshtml" />
+    <Content Include="Views\PreArticleSeasonal\Create.cshtml" />
+    <Content Include="Views\PreArticleSeasonal\Edit.cshtml" />
+    <Content Include="Views\PreArticleSeasonal\Delete.cshtml" />
+    <Content Include="Views\SpaceAllocation\Index.cshtml" />
+    <Content Include="Views\Dept\Index.cshtml" />
+    <Content Include="Views\SpaceAllocation\Edit.cshtml" />
+    <Content Include="Views\SpaceAllocation\AddNew.cshtml" />
+    <Content Include="Views\SpaceAllocation\Delete.cshtml" />
+    <Content Include="Views\AvailableSpace\Index.cshtml" />
+    <Content Include="Views\AvailableSpace\Create.cshtml" />
+    <Content Include="Views\AvailableSpace\Delete.cshtml" />
+    <Content Include="Views\AvailableSpace\Edit.cshtml" />
+    <Content Include="Views\AttributeValue\Edit.cshtml" />
+    <Content Include="Views\AttributeValue\Delete.cshtml" />
+    <Content Include="Views\Dept\Admin.cshtml" />
+    <Content Include="Views\Shared\_Admin.cshtml" />
+    <Content Include="Views\Attribute\Index.cshtml" />
+    <Content Include="Views\Attribute\Create.cshtml" />
+    <Content Include="Views\Attribute\Edit.cshtml" />
+    <Content Include="Views\Attribute\Delete.cshtml" />
+    <Content Include="Views\Grade\Index.cshtml" />
+    <Content Include="Views\Grade\Create.cshtml" />
+    <Content Include="Views\Grade\Edit.cshtml" />
+    <Content Include="Views\Grade\Delete.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\Vendor\Create.cshtml" />
+    <Content Include="Views\Space\Index.cshtml" />
+    <Content Include="Views\Space\Create.cshtml" />
+    <Content Include="Views\Space\Edit.cshtml" />
+    <Content Include="Views\Space\Delete.cshtml" />
+    <Content Include="Views\MerchCat\Index.cshtml" />
+    <Content Include="Views\MerchCat\Create.cshtml" />
+    <Content Include="Views\MerchCat\Edit.cshtml" />
+    <Content Include="Views\MerchCat\Delete.cshtml" />
+    <Content Include="Views\TeamAttributePermission\Index.cshtml" />
+    <Content Include="Views\TeamAttributePermission\Create.cshtml" />
+    <Content Include="Views\TeamAttributePermission\Edit.cshtml" />
+    <Content Include="Views\TeamAttributePermission\Delete.cshtml" />
+    <Content Include="Views\Team\Create.cshtml" />
+    <Content Include="Views\Team\Edit.cshtml" />
+    <Content Include="Views\Team\Delete.cshtml" />
+    <Content Include="Views\PivotView\Index.cshtml" />
+    <Content Include="Views\PivotView\Create.cshtml" />
+    <Content Include="Views\PivotView\Edit.cshtml" />
+    <Content Include="Views\PivotView\Delete.cshtml" />
+    <Content Include="Views\MeType\Index.cshtml" />
+    <Content Include="Views\MeType\Create.cshtml" />
+    <Content Include="Views\MeType\Edit.cshtml" />
+    <Content Include="Views\MeType\Delete.cshtml" />
+    <Content Include="Views\Dept\Create.cshtml" />
+    <Content Include="Views\Dept\Edit.cshtml" />
+    <Content Include="Views\Dept\Delete.cshtml" />
+    <Content Include="Views\Season\Create.cshtml" />
+    <Content Include="Views\Season\Edit.cshtml" />
+    <Content Include="Views\Season\Delete.cshtml" />
+    <Content Include="Views\Cat\Index.cshtml" />
+    <Content Include="Views\Cat\Create.cshtml" />
+    <Content Include="Views\Cat\Edit.cshtml" />
+    <Content Include="Views\Cat\Delete.cshtml" />
+    <None Include="Web.Development.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -204,9 +295,18 @@
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLayerLibrary\BusinessLayerLibrary.csproj">
+      <Project>{f582377a-1ddc-4d2a-a413-c74ee99bd09e}</Project>
+      <Name>BusinessLayerLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Development|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

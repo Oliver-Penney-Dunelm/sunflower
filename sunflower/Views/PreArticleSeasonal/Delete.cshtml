@@ -1,0 +1,113 @@
+﻿@model BusinessLayerLibrary.PreArticleSeasonal
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pre Article Seasonal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SFID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SFID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SunflowerDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SunflowerDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlmDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlmDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlmID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlmID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SapArticleID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SapArticleID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SapDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SapDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeasonID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeasonID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProposedPreArticleGradeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProposedPreArticleGradeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfirmedPreArticleGradeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConfirmedPreArticleGradeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MerchCatID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MerchCatID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendorID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendorID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

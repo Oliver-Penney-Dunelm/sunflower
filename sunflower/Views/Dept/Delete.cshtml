@@ -1,0 +1,49 @@
+﻿@model BusinessLayerLibrary.Dept
+
+@{
+    ViewBag.Title = "Delete Dept";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Delete Dept</h2>
+
+<h3>Are you sure you want to delete Dept @ViewBag.ID ?</h3>
+<div>
+    <h4>Dept</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DeptName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeptName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeptOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeptOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeptActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeptActive)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Admin")
+        </div>
+    }
+</div>

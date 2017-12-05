@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BusinessLayerLibrary.MerchCat>
+
+@{
+    ViewBag.Title = "MerchCat Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>MerchCat Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MerchCatID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeptID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CatID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MerchCatDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MerchCatActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MerchCatID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeptID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CatID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MerchCatDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MerchCatActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MerchCatID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MerchCatID })
+        </td>
+    </tr>
+}
+
+</table>

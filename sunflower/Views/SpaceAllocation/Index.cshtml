@@ -1,0 +1,142 @@
+﻿@model IEnumerable<BusinessLayerLibrary.SpaceAllocation>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Space Allocation Index for @ViewBag.DeptName (@ViewBag.DeptID) - @ViewBag.CatName (@ViewBag.CatID) - Grade @ViewBag.GradeName - @ViewBag.FixtureName</h2>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <p>
+        <h4>
+            @Html.ActionLink("Change Department", "Index", "Dept")
+        </h4>
+    </p>
+
+        
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DropDownList("ddSeason", ViewData["ddSeason"] as SelectList, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DropDownList("ddCat", ViewData["ddCat"] as SelectList, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DropDownList("ddGrade", ViewData["ddGrade"] as SelectList, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DropDownList("ddFO", ViewData["ddFO"] as SelectList, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <input type="submit"  name="submitbutton" value="Change" class="btn btn-default" />
+        </div>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdinalSequence)
+            </th>
+            <th>
+            </th>
+            <th>
+                <input type="submit"  name="submitbutton" value="Retazz LocationID" class="btn btn-default" />
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SapDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProposedGrade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConfirmedGrade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisplayQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeTypeDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PosSequence)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PosOccurances)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facings)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrdinalSequence)
+                </td>
+                <td>
+                    <div class="col-md-2">
+                        <input type="text" name="keys" value=@item.ID hidden="hidden" />
+                    </div>
+                </td>
+                <td>
+                    <input type="number" name="amounts" value=@item.OrdinalSequence />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SapDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProposedGrade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConfirmedGrade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fill)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisplayQuantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeTypeDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PosSequence)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PosOccurances)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Facings)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Add New", "AddNew", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { Autoid = item.AutoID })
+                </td>
+            </tr>
+        }
+
+    </table>
+    }
+

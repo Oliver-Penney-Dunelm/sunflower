@@ -1,0 +1,98 @@
+﻿@model IEnumerable<BusinessLayerLibrary.PreArticleSeasonal>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SFID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SunflowerDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlmDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlmID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SapArticleID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SapDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeasonID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProposedPreArticleGradeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfirmedPreArticleGradeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MerchCatID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendorID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SFID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SunflowerDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlmDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlmID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SapArticleID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SapDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeasonID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProposedPreArticleGradeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfirmedPreArticleGradeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MerchCatID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendorID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    <p>
+        @Html.ActionLink("Back to pivot", "Index", "AttributeValuePivot", new { SeasonID = ViewBag.SeasonID }, null)
+    </p>
+</div>
