@@ -92,9 +92,10 @@ namespace BusinessLayerLibrary
         public string SapArticleID { get; set; }
         public string MasterDescription { get; set; }
         public int SeasonID { get; set; }
+        public int DeptID { get; set; }
+        public string DeptName { get; set; }
         public int MerchCatID { get; set; }
         public string MerchCatDesc { get; set; }
-        public string DeptName { get; set; }
         public string CatDesc { get; set; }
         public string VendorID { get; set; }
         public string VendorDesc { get; set; }
@@ -104,6 +105,11 @@ namespace BusinessLayerLibrary
         public int ConfirmedPreArticleGradeID { get; set; }
         [DisplayName("Confirmed Grade")]
         public string ConfirmedPreArticleGradeDesc { get; set; }
+        [DisplayName("Continue")]
+        public string ContinuationStatus { get; set; }
+        [DisplayName("Replace")]
+        public string ReplacementStatus { get; set; }
+        public string Concepts { get; set; }
         public string Att01 { get; set; }
         public string Att02 { get; set; }
         public string Att03 { get; set; }
@@ -122,6 +128,11 @@ namespace BusinessLayerLibrary
         public string Att16 { get; set; }
         public string Att17 { get; set; }
         public string Att18 { get; set; }
+        //public string Att(int AttributeID)
+        //    {
+        //    //return "";
+        //    return this.GetType().GetProperty("Att" + AttributeID.ToString("00")).ToString();
+        //    }
     }
 
     public class TeamAttributePermission
@@ -187,6 +198,9 @@ namespace BusinessLayerLibrary
         public int ConfirmedPreArticleGradeID { get; set; }
         public int MerchCatID { get; set; }
         public string VendorID { get; set; }
+        public int ContinuationStatusID { get; set; }
+        public int ReplacementStatusID { get; set; }
+        public string SpaceUseID { get; set; }
     }
 
     public class Grade
@@ -274,6 +288,7 @@ namespace BusinessLayerLibrary
         public int CatActive { get; set; }
         public int CatOrder { get; set; }
         public int Concept { get; set; }
+        public string ShortCode { get; set; }
     }
     public class AvailableSpace
     {
@@ -298,6 +313,34 @@ namespace BusinessLayerLibrary
         [Key]
         public int DataTypeID { get; set; }
         public string DataTypeDescription { get; set; }
+    }
+
+    public class SpaceUse
+    {
+        [Key]
+        public string SpaceUseID { get; set; }
+        public string SpaceUseDesc { get; set; }
+    }
+    public class Status
+    {
+        [Key]
+        public int StatusID { get; set; }
+        public string StatusType { get; set; }
+        public string StatusDesc { get; set; }
+        public int CarryForward { get; set; }
+        public int Default { get; set; }
+    }
+    public class TeamView
+    {
+        [Key]
+        public string ID
+        {
+            get { return string.Format("{0}{1}{2}", TeamID, "_", ViewID); }
+        }
+        public int TeamID { get; set; }
+        public string TeamDescription { get; set; }
+        public int ViewID { get; set; }
+        public string ViewDescription { get; set; }
     }
 
 }

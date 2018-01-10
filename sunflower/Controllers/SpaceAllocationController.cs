@@ -52,7 +52,7 @@ namespace sunflower.Controllers
             CatBusinessLayer cbl = new CatBusinessLayer();
             List<Cat> ListOfCats = cbl.Cats.Where(w => w.CatActive == 1).ToList();
 
-            if (CatID == 0)
+            if (CatID == 0 && ListOfMerchCats.Any(q => q.MerchCatActive == 1))
             {
                 CatID = ListOfMerchCats.Where(q => q.MerchCatActive == 1).First().CatID;
             }
@@ -86,8 +86,7 @@ namespace sunflower.Controllers
             #region StaticData
             ViewData["ddSeason"] = ListOfSeasons.Select(m => new SelectListItem { Value = m.SeasonID.ToString(), Text = m.SeasonDesc + " (" + m.SeasonID.ToString() + ")", Selected = m.SeasonID == SeasonID });
             ViewData["ddGrade"] = ListOfGrades.Select(m => new SelectListItem { Value = m.GradeID.ToString(), Text = m.GradeDescription , Selected = m.GradeID == GradeID });
-            //move department selection to department index
-            //ViewData["ddDept"] = ListOfDepts.Select(m => new SelectListItem { Value = m.DeptID.ToString(), Text = m.DeptName + " (" + m.DeptID.ToString() + ")", Selected = m.DeptID == DeptID });
+            ViewData["ddDept"] = ListOfDepts.Select(m => new SelectListItem { Value = m.DeptID.ToString(), Text = m.DeptName + " (" + m.DeptID.ToString() + ")", Selected = m.DeptID == DeptID });
             ViewData["ddCat"] = ListOfCats.Select(m => new SelectListItem { Value = m.CatID.ToString(), Text = m.CatDesc + " (" + m.CatID.ToString() + ")", Selected = m.CatID == CatID });
             
             ViewData["ddFO"]= ListofSelects;
@@ -110,7 +109,7 @@ namespace sunflower.Controllers
         {
             SpaceAllocationBusinessLayer sbl = new SpaceAllocationBusinessLayer();
 
-            if (submitButton== "Retazz LocationID")
+            if (submitButton== "Retazz LocationID" && keys !=null)
             {
                 //read the values for retazz and attempt to realign
                 for(int i = 0; i < keys.Count(); i++)
@@ -129,7 +128,7 @@ namespace sunflower.Controllers
                 Boolean DidRetazzWork=sbl.RetazzSpaceAllocation();
 
             }
-
+            int DeptID = Convert.ToInt32(collection["ddDept"]);
             int SeasonID = Convert.ToInt32(collection["ddSeason"]);
             int GradeID = Convert.ToInt32(collection["ddGrade"]);
             int CatID = Convert.ToInt32(collection["ddCat"]);
@@ -152,24 +151,34 @@ namespace sunflower.Controllers
             List<Season> ListOfSeasons = ebl.Seasons.ToList();
 
             MerchCatBusinessLayer mbl = new MerchCatBusinessLayer();
-            List<MerchCat> ListOfMerchCats = mbl.MerchCats.ToList();
+            List<MerchCat> ListOfMerchCats = mbl.MerchCats.Where(w => w.DeptID == DeptID).ToList();
 
             CatBusinessLayer cbl = new CatBusinessLayer();
             List<Cat> ListOfCats = cbl.Cats.Where(w => w.CatActive == 1).ToList();
+            List<Cat> ListOfCatsForDept = ListOfCats.Join(ListOfMerchCats, a => a.CatID, b => b.CatID, (a, b) => new { a, b }).Select(z => z.a).Distinct().ToList();
 
-            int DeptID = ListOfMerchCats.Where(m => m.CatID == CatID).First().DeptID;
-            DeptName = ListOfDepts.Where(q => q.DeptID == DeptID).Single().DeptName;
-
-            if (ListOfCats.Count > 0)
+            if (ListOfCatsForDept.Count==0)
             {
-                CatName = ListOfCats.Where(c => c.CatID == CatID).Single().CatDesc;
+                CatID = 0;
+                FO = 0;
             }
+            else
+            {
+                if (ListOfCatsForDept.Any(c => c.CatID == CatID) == false)
+                {
+                    CatID = ListOfCatsForDept.First().CatID;
+                    CatName = ListOfCatsForDept.Where(c => c.CatID == CatID).Single().CatDesc;
+                }
+            }
+
+            DeptName = ListOfDepts.Where(q => q.DeptID == DeptID).Single().DeptName;
 
             #region StaticData
 
             ViewData["ddSeason"] = ListOfSeasons.Select(m => new SelectListItem { Value = m.SeasonID.ToString(), Text = m.SeasonDesc + " (" + m.SeasonID.ToString() + ")", Selected = m.SeasonID == SeasonID });
             ViewData["ddGrade"] = ListOfGrades.Select(m => new SelectListItem { Value = m.GradeID.ToString(), Text = m.GradeDescription, Selected = m.GradeID == GradeID });
-            ViewData["ddCat"] = ListOfCats.Select(m => new SelectListItem { Value = m.CatID.ToString(), Text = m.CatDesc + " (" + m.CatID.ToString() + ")", Selected = m.CatID == CatID });
+            ViewData["ddCat"] = ListOfCatsForDept.Select(m => new SelectListItem { Value = m.CatID.ToString(), Text = m.CatDesc + " (" + m.CatID.ToString() + ")", Selected = m.CatID == CatID });
+            ViewData["ddDept"] = ListOfDepts.Select(m => new SelectListItem { Value = m.DeptID.ToString(), Text = m.DeptName + " (" + m.DeptID.ToString() + ")", Selected = m.DeptID == DeptID });
 
             ViewBag.DeptID = DeptID;
             ViewBag.DeptName = DeptName;
@@ -180,6 +189,11 @@ namespace sunflower.Controllers
             ViewBag.GradeName = GradeName;
 
             ListOfSpaceAllocations = ListOfSpaceAllocations.Where(z => z.SpaceGradeID == GradeID && z.SeasonID == SeasonID && z.CatID == CatID).OrderBy(w => w.OrdinalSequence).ToList();
+
+            if (FO == 0 && ListOfSpaceAllocations.Count>0)
+            {
+                FO = ListOfSpaceAllocations.First().FixtureOrdinal;
+            }
 
             List<SelectListItem> ListofSelects = new List<SelectListItem>();
             ListofSelects = ListOfSpaceAllocations.Select(m => new SelectListItem { Value = m.FixtureOrdinal.ToString(), Text = m.FixtureName + " (" + m.FixtureOrdinal.ToString() + ")", Selected = m.FixtureOrdinal == FO }).ToList();

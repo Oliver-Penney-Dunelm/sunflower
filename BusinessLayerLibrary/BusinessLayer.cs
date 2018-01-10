@@ -10,6 +10,8 @@ using System.Reflection;
 
 namespace BusinessLayerLibrary
 {
+
+
     public class StoredProcedureBusinessLayer
     {
         string cnPromoPipeline = "sunflower";
@@ -151,7 +153,7 @@ namespace BusinessLayerLibrary
     {
         string cnPromoPipeline = "sunflower";
 
-        public IEnumerable<AttributeValuePivot> AttributeValuePivots(int ViewID, int SeasonID)
+        public IEnumerable<AttributeValuePivot> AttributeValuePivots(int DeptID,int ViewID, int SeasonID)
         {
             //provides a list of AttributeValuePivots
 
@@ -164,6 +166,12 @@ namespace BusinessLayerLibrary
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+                SqlParameter parDeptID = new SqlParameter()
+                {
+                    ParameterName = "@DeptID",
+                    Value = DeptID
+                };
+                cmd.Parameters.Add(parDeptID);
                 SqlParameter parViewID = new SqlParameter()
                 {
                     ParameterName = "@ViewID",
@@ -190,15 +198,19 @@ namespace BusinessLayerLibrary
                         SeasonID = Convert.ToInt32(rdr["SeasonID"]),
                         MerchCatID = Convert.ToInt32(rdr["MerchCatID"]),
                         VendorID = (string)rdr["VendorID"],
+                        DeptID = Convert.ToInt32(rdr["DeptID"]),
+                        DeptName = (string)rdr["DeptName"],
                         ConfirmedPreArticleGradeID = Convert.ToInt32(rdr["ConfirmedPreArticleGradeID"]),
                         ConfirmedPreArticleGradeDesc = (string)rdr["ConfirmedPreArticleGradeDesc"],
                         ProposedPreArticleGradeID = Convert.ToInt32(rdr["ProposedPreArticleGradeID"]),
                         ProposedPreArticleGradeDesc = (string)rdr["ProposedPreArticleGradeDesc"],
-                        DeptName = (string)rdr["DeptName"],
                         CatDesc = (string)rdr["CatDesc"],
                         MerchCatDesc = (string)rdr["MerchCatDesc"],
                         MasterDescription = (string)rdr["MasterDescription"],
                         VendorDesc = (string)rdr["VendorDesc"],
+                        ContinuationStatus = (string)rdr["ContinuationStatus"],
+                        ReplacementStatus = (string)rdr["ReplacementStatus"],
+                        Concepts = (string)rdr["Concepts"],
                         //surely a way to loop :)
                         Att01 = (string)rdr["Att01"],
                         Att02 = (string)rdr["Att02"],
@@ -230,8 +242,13 @@ namespace BusinessLayerLibrary
         public IEnumerable<AttributeValuePivot> AttributeValuePivotWhereQuery(IEnumerable<AttributeValuePivot> source, string columnName, string propertyValue)
         {
             //filters dynamically by the property name using reflection
-            return source.Where(m => { return m.GetType().GetProperty(columnName).GetValue(m, null).ToString().Contains(propertyValue); });
+            return source.Where(m => { return m.GetType().GetProperty(columnName).GetValue(m, null).ToString().ToLower().Contains(propertyValue.ToLower()); });
         }
+
+        //public string ColumnFormat(int AttributeID)
+        //{
+        //    return "#,##0.00";
+        //}
     }
 
     public class TeamAttributePermissionBusinessLayer
@@ -568,6 +585,7 @@ namespace BusinessLayerLibrary
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+                
                 SqlParameter parNetworkID = new SqlParameter()
                 {
                     ParameterName = "@NetworkID",
@@ -892,7 +910,10 @@ namespace BusinessLayerLibrary
                             ProposedPreArticleGradeID = Convert.ToInt32(rdr["ProposedPreArticleGradeID"]),
                             ConfirmedPreArticleGradeID = Convert.ToInt32(rdr["ConfirmedPreArticleGradeID"]),
                             MerchCatID = Convert.ToInt32(rdr["MerchCatID"]),
-                            VendorID = (string)rdr["VendorID"]
+                            VendorID = (string)rdr["VendorID"],
+                            ContinuationStatusID = Convert.ToInt32(rdr["ContinuationStatusID"]),
+                            ReplacementStatusID = Convert.ToInt32(rdr["ReplacementStatusID"]),
+                            SpaceUseID = (string)rdr["SpaceUseID"],
                         };
                         PreArticleSeasonalList.Add(LoopPreArticleSeasonal);
                     }
@@ -900,56 +921,6 @@ namespace BusinessLayerLibrary
                     con.Close();
                 }
                 return PreArticleSeasonalList;
-            }
-        }
-
-        public bool ActionPreArticleSeasonal(PreArticleSeasonal SomePreArticleSeasonal, string EditInsertCreateDelete, string AuditUser)
-        {
-            //all encompassing executing action method (well it returns a boolean) that uses reflection to edit/create/delete an object
-            //you must have the stored procedure parameters as ALL the properties of a class, including the get-only key ones (e.g. ID)
-            string connString = ConfigurationManager.ConnectionStrings[cnPromoPipeline].ConnectionString;
-            int returnVal = -1;
-            string StoredProcedureName = "FrontEnd.PreArticleSeasonal_" + EditInsertCreateDelete;
-            try
-            {
-                SqlConnection con = new SqlConnection(connString);
-                SqlCommand cmd = new SqlCommand(StoredProcedureName, con);
-                try
-                {
-                    //calls the reflection tool, which pulls the properties/values of a class into a collection of sql parameters
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    ReflectionTool r = new ReflectionTool();
-                    List<SqlParameter> ListOfSqlParams = r.SqlParameters(typeof(PreArticleSeasonal), SomePreArticleSeasonal, AuditUser).ToList();
-
-                    //cmd.paramters is read only...so we have to do a slightly daft loop
-                    foreach (SqlParameter sp in ListOfSqlParams)
-                    {
-                        cmd.Parameters.Add(sp);
-                    }
-
-                    SqlParameter Param = cmd.Parameters.Add("Return Value", SqlDbType.Int);
-                    Param.Direction = System.Data.ParameterDirection.ReturnValue;
-
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-
-                    returnVal = Convert.ToInt32(cmd.Parameters["Return Value"].Value);
-                    return Convert.ToBoolean(returnVal);
-                }
-                catch (Exception e)
-                {
-                    return false;
-                }
-                finally
-                {
-                    cmd.Parameters.Clear();
-                    con.Close();
-                }
-            }
-            catch
-            {
-                return false;
             }
         }
 
@@ -1452,6 +1423,125 @@ namespace BusinessLayerLibrary
                     con.Close();
                 }
                 return DataTypeList;
+            }
+        }
+
+    }
+
+    public class SpaceUseBusinessLayer
+    {
+        string cnPromoPipeline = "sunflower";
+
+        public IEnumerable<SpaceUse> SpaceUses
+        {
+            //provides a list of SpaceUses
+            get
+            {
+                string connString = ConfigurationManager.ConnectionStrings[cnPromoPipeline].ConnectionString;
+                List<SpaceUse> SpaceUseList = new List<SpaceUse>();
+
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("FrontEnd.SpaceUse_Get", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        SpaceUse LoopSpaceUse = new SpaceUse()
+                        {
+                            SpaceUseID = (string)rdr["SpaceUseID"],
+                            SpaceUseDesc = (string)rdr["SpaceUseDesc"],
+                        };
+                        SpaceUseList.Add(LoopSpaceUse);
+                    }
+                    cmd.Parameters.Clear();
+                    con.Close();
+                }
+                return SpaceUseList;
+            }
+        }
+
+    }
+
+    public class StatusBusinessLayer
+    {
+        string cnPromoPipeline = "sunflower";
+
+        public IEnumerable<Status> Statuses
+        {
+            //provides a list of Statuss
+            get
+            {
+                string connString = ConfigurationManager.ConnectionStrings[cnPromoPipeline].ConnectionString;
+                List<Status> StatusList = new List<Status>();
+
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("FrontEnd.Status_Get", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Status LoopStatus = new Status()
+                        {
+                            StatusID = Convert.ToInt32(rdr["StatusID"]),
+                            StatusDesc = (string)rdr["StatusDesc"],
+                            StatusType = (string)rdr["StatusType"],
+                            CarryForward = Convert.ToInt32(rdr["CarryForward"]),
+                            Default = Convert.ToInt32(rdr["Default"]),
+                        };
+                        StatusList.Add(LoopStatus);
+                    }
+                    cmd.Parameters.Clear();
+                    con.Close();
+                }
+                return StatusList;
+            }
+        }
+
+    }
+
+    public class TeamViewBusinessLayer
+    {
+        string cnPromoPipeline = "sunflower";
+
+        public IEnumerable<TeamView> TeamViews
+        {
+            //provides a list of TeamViews
+            get
+            {
+                string connString = ConfigurationManager.ConnectionStrings[cnPromoPipeline].ConnectionString;
+                List<TeamView> TeamViewList = new List<TeamView>();
+
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("FrontEnd.TeamView_Get", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        TeamView LoopTeamView = new TeamView()
+                        {
+                            TeamID = Convert.ToInt32(rdr["TeamID"]),
+                            TeamDescription = (string)rdr["TeamDescription"],
+                            ViewID = Convert.ToInt32(rdr["ViewID"]),
+                            ViewDescription = (string)rdr["ViewDescription"],
+                        };
+                        TeamViewList.Add(LoopTeamView);
+                    }
+                    cmd.Parameters.Clear();
+                    con.Close();
+                }
+                return TeamViewList;
             }
         }
 

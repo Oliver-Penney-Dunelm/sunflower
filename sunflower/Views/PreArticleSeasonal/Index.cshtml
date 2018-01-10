@@ -45,6 +45,15 @@
         <th>
             @Html.DisplayNameFor(model => model.VendorID)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContinuationStatusID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReplacementStatusID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpaceUseID)
+        </th>
         <th></th>
     </tr>
 
@@ -82,6 +91,15 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.VendorID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContinuationStatusID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReplacementStatusID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpaceUseID)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

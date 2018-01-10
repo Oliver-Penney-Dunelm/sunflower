@@ -52,7 +52,7 @@ namespace sunflower.Controllers
             CatBusinessLayer cbl = new CatBusinessLayer();
             List<Cat> ListOfCats = cbl.Cats.Where(w => w.CatActive == 1).ToList();
 
-            if (CatID == 0)
+            if (CatID == 0 && ListOfMerchCats.Any(q => q.MerchCatActive == 1))
             {
                 CatID = ListOfMerchCats.Where(q => q.MerchCatActive == 1).First().CatID;
             }

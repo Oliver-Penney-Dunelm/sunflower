@@ -19,22 +19,16 @@ namespace sunflower.Controllers
             {
                 ListOfPreArticleSeasonals = ListOfPreArticleSeasonals.Where(j => j.SeasonID == SeasonID).ToList();
             }
-          
+
             return View(ListOfPreArticleSeasonals);
         }
 
-        // GET: PreArticleSeasonal/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: PreArticleSeasonal/Create
         public ActionResult Create(int SeasonID = 0)
         {
             SeasonBusinessLayer sbl = new SeasonBusinessLayer();
             List<Season> ListOfSeasons = sbl.Seasons.Where(r => r.SeasonActive == 1).OrderBy(o => o.FirstLaunchDate).ToList();
-            ViewData["ddSeason"] = ListOfSeasons.Select(m => new SelectListItem { Value = m.SeasonID.ToString(), Text = m.SeasonDesc + " (" + m.SeasonID.ToString() + ")", Selected = m.SeasonID == SeasonID });
 
             VendorBusinessLayer vbl = new VendorBusinessLayer();
             List<Vendor> ListOfVendors = vbl.Vendors.OrderBy(o => o.VendorID).ToList();
@@ -45,10 +39,21 @@ namespace sunflower.Controllers
             MerchCatBusinessLayer mbl = new MerchCatBusinessLayer();
             List<MerchCat> ListOfMerchCats = mbl.MerchCats.OrderBy(o => o.MerchCatID).ToList();
 
+            SpaceUseBusinessLayer spbl = new SpaceUseBusinessLayer();
+            List<SpaceUse> ListOfSpaceUses = spbl.SpaceUses.ToList();
+
+            StatusBusinessLayer tbl = new StatusBusinessLayer();
+            List<Status> ListOfStatuses = tbl.Statuses.ToList();
+
+            ViewData["ddSeason"] = ListOfSeasons.Select(m => new SelectListItem { Value = m.SeasonID.ToString(), Text = m.SeasonDesc + " (" + m.SeasonID.ToString() + ")", Selected = m.SeasonID == SeasonID });
+            ViewData["ddSpaceUse"] = ListOfSpaceUses.Select(m => new SelectListItem { Value = m.SpaceUseID.ToString(), Text = m.SpaceUseDesc + " (" + m.SpaceUseID.ToString() + ")" });
             ViewData["ddGradeP"] = ListOfGrades.Select(m => new SelectListItem { Value = m.GradeID.ToString(), Text = m.GradeDescription });
             ViewData["ddGradeC"] = ListOfGrades.Select(m => new SelectListItem { Value = m.GradeID.ToString(), Text = m.GradeDescription });
             ViewData["ddMerchCat"] = ListOfMerchCats.Select(m => new SelectListItem { Value = m.MerchCatID.ToString(), Text = m.MerchCatDesc + " (" + m.MerchCatID.ToString() + ")" });
             ViewData["ddVendor"] = ListOfVendors.Select(m => new SelectListItem { Value = m.VendorID, Text = m.VendorDesc + " (" + m.VendorID + ")" });
+            ViewData["ddContinue"] = ListOfStatuses.Where(i=>i.StatusType=="C").Select(m => new SelectListItem { Value = m.StatusID.ToString(), Text = m.StatusDesc + " (" + m.StatusID.ToString() + ")", Selected = m.Default == 1});
+            ViewData["ddReplacement"] = ListOfStatuses.Where(i => i.StatusType == "R").Select(m => new SelectListItem { Value = m.StatusID.ToString(), Text = m.StatusDesc + " (" + m.StatusID.ToString() + ")", Selected = m.Default == 1 });
+
             ViewBag.SeasonID = SeasonID;
             return View();
         }
@@ -57,6 +62,7 @@ namespace sunflower.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            string CrudAction = "Create";
             bool DidItWork = false;
             try
             {
@@ -72,9 +78,13 @@ namespace sunflower.Controllers
                 SomePreArticalSeasonal.ConfirmedPreArticleGradeID = Convert.ToInt32(collection["ddGradeC"]);
                 SomePreArticalSeasonal.MerchCatID = Convert.ToInt32(collection["ddMerchCat"]);
                 SomePreArticalSeasonal.VendorID = (string)collection["ddVendor"];
+                SomePreArticalSeasonal.ContinuationStatusID = Convert.ToInt32(collection["ddContinue"]);
+                SomePreArticalSeasonal.ReplacementStatusID = Convert.ToInt32(collection["ddReplacement"]);
+                SomePreArticalSeasonal.SpaceUseID = (string)collection["ddSpaceUse"];
 
-                PreArticleSeasonalBusinessLayer bl = new PreArticleSeasonalBusinessLayer();
-                DidItWork = bl.ActionPreArticleSeasonal(SomePreArticalSeasonal,"Create", User.Identity.Name);
+                StoredProcedureBusinessLayer spbl = new StoredProcedureBusinessLayer();
+                DidItWork = spbl.ExecuteStoredProcedure(SomePreArticalSeasonal, CrudAction, User.Identity.Name);
+
                 if (DidItWork == false)
                 {
                     //something went wrong trying to action the PreArticalSeasonald procedure
@@ -109,7 +119,12 @@ namespace sunflower.Controllers
             MerchCatBusinessLayer mbl = new MerchCatBusinessLayer();
             List<MerchCat> ListOfMerchCats = mbl.MerchCats.OrderBy(o => o.MerchCatID).ToList();
 
-            
+            SpaceUseBusinessLayer spbl = new SpaceUseBusinessLayer();
+            List<SpaceUse> ListOfSpaceUses = spbl.SpaceUses.ToList();
+
+            StatusBusinessLayer tbl = new StatusBusinessLayer();
+            List<Status> ListOfStatuses = tbl.Statuses.ToList();
+
             #endregion
 
             PreArticleSeasonalBusinessLayer pbl = new PreArticleSeasonalBusinessLayer();
@@ -120,6 +135,9 @@ namespace sunflower.Controllers
             ViewData["ddGradeC"] = ListOfGrades.Select(m => new SelectListItem { Value = m.GradeID.ToString(), Text = m.GradeDescription, Selected = m.GradeID == SomePreArticleSeasonal.ConfirmedPreArticleGradeID });
             ViewData["ddMerchCat"] = ListOfMerchCats.Select(m => new SelectListItem { Value = m.MerchCatID.ToString(), Text = m.MerchCatDesc + " (" + m.MerchCatID.ToString() + ")", Selected = m.MerchCatID == SomePreArticleSeasonal.MerchCatID });
             ViewData["ddVendor"] = ListOfVendors.Select(m => new SelectListItem { Value = m.VendorID, Text = m.VendorDesc + " (" + m.VendorID + ")", Selected = m.VendorID == SomePreArticleSeasonal.VendorID });
+            ViewData["ddSpaceUse"] = ListOfSpaceUses.Select(m => new SelectListItem { Value = m.SpaceUseID.ToString(), Text = m.SpaceUseDesc + " (" + m.SpaceUseID.ToString() + ")", Selected = m.SpaceUseID == SomePreArticleSeasonal.VendorID });
+            ViewData["ddContinue"] = ListOfStatuses.Where(i => i.StatusType == "C").Select(m => new SelectListItem { Value = m.StatusID.ToString(), Text = m.StatusDesc + " (" + m.StatusID.ToString() + ")", Selected = m.StatusID==SomePreArticleSeasonal.ConfirmedPreArticleGradeID});
+            ViewData["ddReplacement"] = ListOfStatuses.Where(i => i.StatusType == "R").Select(m => new SelectListItem { Value = m.StatusID.ToString(), Text = m.StatusDesc + " (" + m.StatusID.ToString() + ")", Selected = m.StatusID == SomePreArticleSeasonal.ReplacementStatusID });
 
 
             ViewBag.SeasonID = SomePreArticleSeasonal.SeasonID;
@@ -130,6 +148,7 @@ namespace sunflower.Controllers
         [HttpPost]
         public ActionResult Edit(string id, FormCollection collection)
         {
+            string CrudAction = "Edit";
             bool DidItWork = false;
             try
             {
@@ -145,9 +164,12 @@ namespace sunflower.Controllers
                 SomePreArticalSeasonal.ConfirmedPreArticleGradeID = Convert.ToInt32(collection["ddGradeC"]);
                 SomePreArticalSeasonal.MerchCatID = Convert.ToInt32(collection["ddMerchCat"]);
                 SomePreArticalSeasonal.VendorID = (string)collection["ddVendor"];
+                SomePreArticalSeasonal.ContinuationStatusID = Convert.ToInt32(collection["ddContinue"]);
+                SomePreArticalSeasonal.ReplacementStatusID = Convert.ToInt32(collection["ddReplacement"]);
+                SomePreArticalSeasonal.SpaceUseID = (string)collection["ddSpaceUse"];
 
-                PreArticleSeasonalBusinessLayer bl = new PreArticleSeasonalBusinessLayer();
-                DidItWork = bl.ActionPreArticleSeasonal(SomePreArticalSeasonal, "Edit", User.Identity.Name);
+                StoredProcedureBusinessLayer spbl = new StoredProcedureBusinessLayer();
+                DidItWork = spbl.ExecuteStoredProcedure(SomePreArticalSeasonal, CrudAction, User.Identity.Name);
                 if (DidItWork == false)
                 {
                     //something went wrong trying to action the PreArticalSeasonald procedure
@@ -179,13 +201,15 @@ namespace sunflower.Controllers
         [HttpPost]
         public ActionResult Delete(string id, FormCollection collection)
         {
+            string CrudAction = "Delete";
             bool DidItWork = false;
             try
             {
                 PreArticleSeasonalBusinessLayer sbl = new PreArticleSeasonalBusinessLayer();
                 PreArticleSeasonal r = sbl.PreArticleSeasonals.Where(q => q.ID == id).Single();
 
-                DidItWork = sbl.ActionPreArticleSeasonal(r, "Delete",User.Identity.Name);
+                StoredProcedureBusinessLayer spbl = new StoredProcedureBusinessLayer();
+                DidItWork = spbl.ExecuteStoredProcedure(r, CrudAction, User.Identity.Name);
                 if (DidItWork == false)
                 {
                     return Content("Error on deletion of PreArticleSeasonal. Press back to return and try again");

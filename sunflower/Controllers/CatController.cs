@@ -50,6 +50,7 @@ namespace sunflower.Controllers
                 a.CatActive = Convert.ToInt32(collection["ddActive"]);
                 a.CatOrder = Convert.ToInt32(collection["CatOrder"]);
                 a.Concept = Convert.ToInt32(collection["ddConcept"]);
+                a.ShortCode = (string)collection["ShortCode"];
                 #endregion
 
                 StoredProcedureBusinessLayer spbl = new StoredProcedureBusinessLayer();
@@ -101,6 +102,7 @@ namespace sunflower.Controllers
                 a.CatActive = Convert.ToInt32(collection["ddActive"]);
                 a.CatOrder = Convert.ToInt32(collection["CatOrder"]);
                 a.Concept = Convert.ToInt32(collection["ddConcept"]);
+                a.ShortCode = (string)collection["ShortCode"];
                 #endregion
 
                 StoredProcedureBusinessLayer spbl = new StoredProcedureBusinessLayer();

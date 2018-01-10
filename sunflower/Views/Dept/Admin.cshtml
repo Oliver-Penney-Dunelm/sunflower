@@ -24,6 +24,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -36,6 +37,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DeptOrder)
+        </td>
+        <td>
+            @Html.ActionLink("Total Lines", "Index", "AttributeValuePivot", new { DeptID = item.DeptID }, null)
         </td>
         <td>
             @Html.ActionLink("Space Allocation", "Index", "SpaceAllocation", new { DeptID = item.DeptID }, null)

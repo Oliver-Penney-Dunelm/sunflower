@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - Sunflower</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,19 +22,21 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Total Lines", "Index", "AttributeValuePivot")</li>
                     <li>@Html.ActionLink("Dept", "Index", "Dept")</li>
+                    <li>@Html.ActionLink("Total Lines", "Index", "AttributeValuePivot")</li>
                     <li>@Html.ActionLink("Allocate", "Index", "SpaceAllocation")</li>
                     <li>@Html.ActionLink("Attribute", "Index", "Attribute")</li>
                     <li>@Html.ActionLink("Season", "Index", "Season")</li>
                     <li>@Html.ActionLink("Vendor", "Index", "Vendor")</li>
                     <li>@Html.ActionLink("Space", "Index", "Space")</li>
+                    <li>@Html.ActionLink("Cat", "Index", "Cat")</li>
                     <li>@Html.ActionLink("MerchCat", "Index", "MerchCat")</li>
                     <li>@Html.ActionLink("Team", "Index", "Team")</li>
                     <li>@Html.ActionLink("TAP", "Index", "TeamAttributePermission")</li>
                     <li>@Html.ActionLink("User", "Index", "User")</li>
                     <li>@Html.ActionLink("View", "Index", "PivotView")</li>
                     <li>@Html.ActionLink("MeType", "Index", "MeType")</li>
+                    <li>@Html.ActionLink("TeamView", "Index", "TeamView")</li>
                 </ul>
                 <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name</p>
             </div>

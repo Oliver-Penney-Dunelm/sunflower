@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#FilterDiv {
+    background-color: lightblue;
+    display:none;
+
+}
