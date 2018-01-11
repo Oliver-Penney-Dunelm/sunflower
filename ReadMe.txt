@@ -1,6 +1,6 @@
 --to do list
 
---thursday AM
+--thursday 10am
 
 5/12
 
