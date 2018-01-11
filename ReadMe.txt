@@ -17,8 +17,6 @@
 
 
 
-
-
 not in Linq
 
 
