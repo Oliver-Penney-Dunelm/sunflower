@@ -1,5 +1,7 @@
 --to do list
 
+--thursday AM
+
 5/12
 
 1) concepts 
